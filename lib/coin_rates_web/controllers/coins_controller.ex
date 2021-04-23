@@ -10,14 +10,20 @@ defmodule CoinRatesWeb.CoinsController do
   end
 
   def create(conn, params) do
-    %{ "coin" => %{ "url" => url } } = params
-    if String.trim(url) != "" do
-      IO.puts url
-      render(conn, "new.html")
+    %{ "coin" => %{ "slug" => slug } } = params
+    if String.trim(slug) != "" do
+      case CoinRatesWeb.CoinInfoFetcher.perform(slug) do
+        {:ok} -> render(conn, "new.html")
+        {:error, message} -> return_error(conn, "new.html", message)
+      end
     else
-      conn
-      |> put_flash(:error, "You should send the url.")
-      |> render("new.html")
+      return_error(conn, "new.html", "You should send the slug.")
     end
+  end
+
+  defp return_error(conn, template, message) do
+    conn
+    |> put_flash(:error, message)
+    |> render(template)
   end
 end
