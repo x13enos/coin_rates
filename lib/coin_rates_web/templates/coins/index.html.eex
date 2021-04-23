@@ -1,0 +1,3 @@
+<div class="container">
+  <%= button("Add Coin", to: Routes.coins_path(@conn, :new), method: :get, class: "btn btn-primary") %>
+</div>

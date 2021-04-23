@@ -1,0 +1,8 @@
+<h2>New Coin</h2>
+<%= form_for @conn, Routes.coins_path(@conn, :create), [as: :coin], fn f -> %>
+  <div class="mb-3">
+    <label for="coin_url" class="form-label">Email address</label>
+    <%= text_input f, :url, class: "form-control" %>
+  </div>
+  <%= submit "Add", class: "btn btn-primary" %>
+<% end %>
