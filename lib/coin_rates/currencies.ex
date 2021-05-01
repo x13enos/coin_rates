@@ -38,6 +38,23 @@ defmodule CoinRates.Currencies do
   def get_coin!(id), do: Repo.get!(Coin, id)
 
   @doc """
+  Gets a single coin by specific attribute.
+
+  Return nil if the Coin does not exist.
+
+  ## Examples
+
+      iex> get_coin_by(%{ name: "Bitcoin" })
+      %Coin{}
+
+      iex> get_coin_by(%{ name: "Gitcoin" })
+      nil
+
+  """
+  def get_coin_by(attribute), do: Repo.get_by(Coin, attribute)
+
+
+  @doc """
   Creates a coin.
 
   ## Examples
@@ -100,5 +117,9 @@ defmodule CoinRates.Currencies do
   """
   def change_coin(%Coin{} = coin, attrs \\ %{}) do
     Coin.changeset(coin, attrs)
+  end
+
+  def last_coin() do
+    from(c in Coin, limit: 1) |> CoinRates.Repo.one
   end
 end

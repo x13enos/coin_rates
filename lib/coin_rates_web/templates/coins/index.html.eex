@@ -1,3 +1,44 @@
-<div class="container">
   <%= button("Add Coin", to: Routes.coins_path(@conn, :new), method: :get, class: "btn btn-primary") %>
-</div>
+
+  <div class="mt-4">
+    <div class="row">
+      <%= for coin <- @coins do %>
+        <div class="col-md-6 col-sm-12 p-2">
+          <div class="border rounded p-2">
+            <div class="d-flex justify-content-between">
+              <div>
+                <%= img_tag(coin.logo, class: "logo rounded") %>
+                <%= coin.name %>
+              </div>
+              <div class="token_address">
+                <%= coin.token_address %>
+              </div>
+              <%= link("Website", to: coin.website, class: "pt-1") %>
+            </div>
+            <hr>
+            <div class="chart">
+            </div>
+            <hr>
+            <div class="d-flex">
+              <%= if coin.reddit do %>
+                <%= link to: coin.reddit, class: "icon mr-3" do %>
+                  <i class="fab fa-reddit %> fa-2x"></i>
+                <% end %>
+              <% end %>
+              <%= if coin.twitter do %>
+                <%= link to: coin.twitter, class: "icon mr-3" do %>
+                  <i class="fab fa-twitter %> fa-2x"></i>
+                <% end %>
+              <% end %>
+              <%= for chat <- coin.chats do %>
+                <%= link to: chat, class: "icon mr-3" do %>
+                  <i class="fab fa-<%= chat_logo(chat) %> fa-2x"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
