@@ -12,6 +12,7 @@ defmodule CoinRates.Currencies.Coin do
     field :twitter, :string
     field :chats, {:array, :string}
     field :token_address, :string
+    has_many :quotes, CoinRates.Currencies.Quote
 
     timestamps()
   end

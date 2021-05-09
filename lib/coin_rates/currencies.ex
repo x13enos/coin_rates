@@ -6,7 +6,7 @@ defmodule CoinRates.Currencies do
   import Ecto.Query, warn: false
   alias CoinRates.Repo
 
-  alias CoinRates.Currencies.Coin
+  alias CoinRates.Currencies.{Coin, Quote}
 
   @doc """
   Returns the list of coins.
@@ -18,7 +18,7 @@ defmodule CoinRates.Currencies do
 
   """
   def list_coins do
-    Repo.all(Coin)
+    Repo.all(Coin) |> Repo.preload(:quotes)
   end
 
   @doc """
@@ -121,5 +121,36 @@ defmodule CoinRates.Currencies do
 
   def last_coin() do
     from(c in Coin, limit: 1) |> CoinRates.Repo.one
+  end
+
+  @doc """
+  Returns the list of quotes by coin.
+
+  ## Examples
+
+      iex> list_quotes_by_coin()
+      [%Quote{}, ...]
+
+  """
+  def list_quotes_by_coin(coin_id) do
+    Repo.all(from q in Quote, where: q.coin_id == ^coin_id)
+  end
+
+  @doc """
+  Creates a quote.
+
+  ## Examples
+
+      iex> create_quote(%{field: value})
+      {:ok, %Quote{}}
+
+      iex> create_quote(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_quote(attrs \\ %{}) do
+    %Quote{}
+    |> Quote.changeset(attrs)
+    |> Repo.insert()
   end
 end

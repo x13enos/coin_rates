@@ -1,4 +1,17 @@
 defmodule CoinRatesWeb.CoinInfoFetcher do 
+  @moduledoc """
+  Coin Info fetcher.
+  """
+
+  @doc """
+  It launches service, that uses passed slug for fetching coin's info from CoinMarkerCap.
+
+  ## Examples
+
+      iex> perform('OKTA')
+      {:ok}
+
+  """
 
   def perform(slug) do
     {:ok, response} = fetch_data_from_market(slug)
