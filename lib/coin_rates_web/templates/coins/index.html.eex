@@ -1,5 +1,8 @@
   <%= button("Add Coin", to: Routes.coins_path(@conn, :new), method: :get, class: "btn btn-primary") %>
 
+  <h1>Quote Price</h1>
+  <%= live_render(@conn, CoinRatesWeb.QuotesLive) %>
+
   <div class="mt-4">
     <div class="row">
       <%= for coin <- @coins do %>

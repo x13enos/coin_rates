@@ -32,6 +32,8 @@ defmodule CoinRatesWeb do
       use Phoenix.View,
         root: "lib/coin_rates_web/templates",
         namespace: CoinRatesWeb
+      
+      import Phoenix.LiveView.Helpers
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -48,6 +50,7 @@ defmodule CoinRatesWeb do
 
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 
@@ -55,6 +58,23 @@ defmodule CoinRatesWeb do
     quote do
       use Phoenix.Channel
       import CoinRatesWeb.Gettext
+    end
+  end
+
+  def live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {CoinRatesWeb.LayoutView, "live.html"}
+
+      unquote(view_helpers())
+    end
+  end
+
+  def live_component do
+    quote do
+      use Phoenix.LiveComponent
+
+      unquote(view_helpers())
     end
   end
 

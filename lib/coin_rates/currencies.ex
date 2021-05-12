@@ -123,6 +123,10 @@ defmodule CoinRates.Currencies do
     from(c in Coin, limit: 1) |> CoinRates.Repo.one
   end
 
+  def last_quote() do
+    from(q in Quote, limit: 1) |> CoinRates.Repo.one
+  end
+
   @doc """
   Returns the list of quotes by coin.
 
