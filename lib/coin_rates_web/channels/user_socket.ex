@@ -2,7 +2,7 @@ defmodule CoinRatesWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", CoinRatesWeb.RoomChannel
+  channel "chart:*", CoinRatesWeb.ChartChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

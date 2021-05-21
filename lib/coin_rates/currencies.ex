@@ -18,7 +18,8 @@ defmodule CoinRates.Currencies do
 
   """
   def list_coins do
-    Repo.all(Coin) |> Repo.preload(:quotes)
+    quotes_query = from q in Quote, order_by: [asc: q.inserted_at], where: q.inserted_at >= datetime_add(^DateTime.utc_now, -1, "day")
+    Repo.all(from Coin, preload: [quotes: ^quotes_query])
   end
 
   @doc """
@@ -125,19 +126,6 @@ defmodule CoinRates.Currencies do
 
   def last_quote() do
     from(q in Quote, limit: 1) |> CoinRates.Repo.one
-  end
-
-  @doc """
-  Returns the list of quotes by coin.
-
-  ## Examples
-
-      iex> list_quotes_by_coin()
-      [%Quote{}, ...]
-
-  """
-  def list_quotes_by_coin(coin_id) do
-    Repo.all(from q in Quote, where: q.coin_id == ^coin_id)
   end
 
   @doc """

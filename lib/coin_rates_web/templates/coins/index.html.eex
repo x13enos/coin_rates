@@ -1,17 +1,24 @@
   <%= button("Add Coin", to: Routes.coins_path(@conn, :new), method: :get, class: "btn btn-primary") %>
 
-  <h1>Quote Price</h1>
-  <%= live_render(@conn, CoinRatesWeb.QuotesLive) %>
+  <script type="text/javascript">
+    window.chart_data = {}
+    window.chart_labels = {}
+  </script>
+
 
   <div class="mt-4">
     <div class="row">
       <%= for coin <- @coins do %>
+        <script type="text/javascript">
+          window.chart_data['<%= coin.slug %>'] = <%= raw(Jason.encode!(select_quotes_price(coin.quotes))) %>
+          window.chart_labels['<%= coin.slug %>'] = <%= raw(Jason.encode!(select_quotes_timestamp(coin.quotes))) %>
+        </script>
         <div class="col-md-6 col-sm-12 p-2">
           <div class="border rounded p-2">
             <div class="d-flex justify-content-between">
               <div>
                 <%= img_tag(coin.logo, class: "logo rounded") %>
-                <%= coin.name %>
+                <%= coin.name %> 
               </div>
               <div class="token_address">
                 <%= coin.token_address %>
@@ -20,6 +27,7 @@
             </div>
             <hr>
             <div class="chart">
+              <canvas id="lineChart-<%= coin.slug %>"></canvas>
             </div>
             <hr>
             <div class="d-flex">
@@ -45,3 +53,4 @@
     </div>
   </div>
 
+<script src='<%= Routes.static_path(@conn, "/js/linechart.js") %>' type="text/javascript"></script>

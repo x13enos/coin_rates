@@ -1,4 +1,4 @@
-defmodule CoinRates.PriceFetchingJob do
+defmodule CoinRates.QuotesFetchingJob do
   use GenServer
   
   @impl true
@@ -19,6 +19,6 @@ defmodule CoinRates.PriceFetchingJob do
   end
   
   defp do_recurrent_thing() do
-    CoinRatesWeb.PriceFetcher.perform()
+    CoinRatesWeb.QuotesFetcher.perform()
   end
 end

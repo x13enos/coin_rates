@@ -14,7 +14,7 @@ defmodule CoinRates.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: CoinRates.PubSub},
       # Start the Endpoint (http/https)
-      CoinRates.PriceFetchingJob,
+      CoinRates.QuotesFetchingJob,
       # Start repeated job of fetching prices
       CoinRatesWeb.Endpoint
       # Start a worker by calling: CoinRates.Worker.start_link(arg)

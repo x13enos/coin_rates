@@ -1,4 +1,4 @@
-defmodule CoinRatesWeb.PriceFetcher do 
+defmodule CoinRatesWeb.QuotesFetcher do 
   @moduledoc """
   Price fetcher.
   """
@@ -28,7 +28,8 @@ defmodule CoinRatesWeb.PriceFetcher do
 
   defp create_quotes({:ok, response}, coins) do
     Enum.each(coins, fn coin -> 
-      select_params(response, coin) |> CoinRates.Currencies.create_quote() 
+      {:ok, new_quote} = select_params(response, coin) |> CoinRates.Currencies.create_quote()
+      spawn(CoinRatesWeb.ChartDataSender, :perform, [coin.slug, new_quote])
     end)
   end
 
