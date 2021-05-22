@@ -14,15 +14,14 @@ defmodule CoinRatesWeb.CoinsView do
   end
 
   def select_quotes_price(quotes) do
-    IO.inspect(Enum.map(quotes, & convert_decimal(&1.price)))
     Enum.map(quotes, & convert_decimal(&1.price))
   end
 
-  defp convert_decimal(value) do
+  def convert_decimal(value) do
     :erlang.float_to_binary(Decimal.to_float(value), [:compact, decimals: 20])
   end
 
-  defp convert_timestamp_to_unix(value) do
+  def convert_timestamp_to_unix(value) do
     seconds = NaiveDateTime.to_gregorian_seconds(value) |> elem(0)
     seconds * 1000
   end
