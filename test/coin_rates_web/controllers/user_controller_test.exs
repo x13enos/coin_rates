@@ -3,9 +3,9 @@ defmodule CoinRatesWeb.UserControllerTest do
 
   alias CoinRates.Accounts
 
-  @create_attrs %{name: "some name", username: "some username"}
-  @update_attrs %{name: "some updated name", username: "some updated username"}
-  @invalid_attrs %{name: nil, username: nil}
+  @create_attrs %{crypted_password: "some crypted_password", email: "some email", name: "some name"}
+  @update_attrs %{crypted_password: "some updated crypted_password", email: "some updated email", name: "some updated name"}
+  @invalid_attrs %{crypted_password: nil, email: nil, name: nil}
 
   def fixture(:user) do
     {:ok, user} = Accounts.create_user(@create_attrs)
@@ -60,7 +60,7 @@ defmodule CoinRatesWeb.UserControllerTest do
       assert redirected_to(conn) == Routes.user_path(conn, :show, user)
 
       conn = get(conn, Routes.user_path(conn, :show, user))
-      assert html_response(conn, 200) =~ "some updated name"
+      assert html_response(conn, 200) =~ "some updated crypted_password"
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do

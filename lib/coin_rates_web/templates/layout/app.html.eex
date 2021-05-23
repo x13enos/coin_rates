@@ -13,6 +13,13 @@
   <body>
     <header>
       <section class="container">
+        <%= if logged_in?(@conn) do %>
+          <%= current_user(@conn).email %>
+          <%= link "Logout", to: Routes.session_path(@conn, :delete), method: :delete %>
+        <% else %>
+          <%= link "Login", to: "/login" %>
+          <%= link "Register", to: Routes.registration_path(@conn, :new) %>
+        <% end %>
       </section>
     </header>
     <main role="main" class="container">

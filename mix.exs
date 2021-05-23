@@ -48,6 +48,8 @@ defmodule CoinRates.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.7"},
       {:poison, "~> 3.1"},
+      {:comeonin, "~> 5.3"},
+      {:bcrypt_elixir, "~> 2.0"},
       {:ex_doc, "~> 0.13", only: :dev}
     ]
   end
