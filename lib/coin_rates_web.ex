@@ -89,7 +89,6 @@ defmodule CoinRatesWeb do
       import CoinRatesWeb.ErrorHelpers
       import CoinRatesWeb.Gettext
       alias CoinRatesWeb.Router.Helpers, as: Routes
-      import CoinRatesWeb.Session, only: [current_user: 1, logged_in?: 1]
     end
   end
 

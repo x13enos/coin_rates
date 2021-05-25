@@ -9,7 +9,7 @@ defmodule CoinRatesWeb.SessionController do
     case login(params) do
       {:ok, user} ->
         conn
-        |> put_session(:current_user, user.id)
+        |> put_session(:current_user_id, user.id)
         |> put_flash(:info, "Logged in")
         |> redirect(to: "/")
       :error ->
@@ -21,7 +21,7 @@ defmodule CoinRatesWeb.SessionController do
 
   def delete(conn, _) do
     conn
-    |> delete_session(:current_user)
+    |> delete_session(:current_user_id)
     |> put_flash(:info, "Logged out")
     |> redirect(to: "/")
   end

@@ -7,6 +7,7 @@ defmodule CoinRatesWeb.Router do
     plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug CoinRatesWeb.Plugs.SetCurrentUser
     plug CoinRatesWeb.Plugs.Locale, "en"
   end
 
@@ -14,13 +15,26 @@ defmodule CoinRatesWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :session do
+    plug :put_layout, { CoinRatesWeb.LayoutView, :session}
+  end
+
+  pipeline :auth do
+    plug CoinRatesWeb.Plugs.AuthenticateUser
+  end
+
   scope "/", CoinRatesWeb do
-    pipe_through :browser
+    pipe_through [:browser, :auth]
 
     get "/", PageController, :index
     get "/dashboard", CoinsController, :index
 
     resources "/coins", CoinsController, except: [:index, :show]
+  end
+
+  scope "/session/", CoinRatesWeb do
+    pipe_through [:browser, :session]
+
     resources "/registrations", RegistrationController, only: [:new, :create]
 
     get    "/login",  SessionController, :new

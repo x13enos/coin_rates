@@ -2,6 +2,6 @@ defmodule CoinRatesWeb.LayoutView do
   use CoinRatesWeb, :view
 
   def title do
-    "Awesome New Title!"
+    "Coin Rates Dashboard"
   end
 end
