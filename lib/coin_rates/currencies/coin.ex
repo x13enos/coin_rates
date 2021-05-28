@@ -13,6 +13,7 @@ defmodule CoinRates.Currencies.Coin do
     field :chats, {:array, :string}
     field :token_address, :string
     has_many :quotes, CoinRates.Currencies.Quote
+    many_to_many :users, CoinRates.Accounts.User, join_through: "users_coins"
 
     timestamps()
   end

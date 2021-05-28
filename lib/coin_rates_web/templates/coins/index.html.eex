@@ -46,6 +46,7 @@
                   <i class="fab fa-<%= chat_logo(chat) %> fa-2x"></i>
                 <% end %>
               <% end %>
+              <%= button("remove", to: Routes.coins_path(@conn, :delete, coin.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger", ) %>
             </div>
           </div>
         </div>

@@ -4,10 +4,11 @@ defmodule CoinRates.Accounts do
   """
 
   import Ecto.Query, warn: false
-  import Ecto.Changeset, only: [put_change: 3]
+  import Ecto.Changeset, only: [put_change: 3, put_assoc: 3, change: 1]
   alias CoinRates.Repo
 
   alias CoinRates.Accounts.User
+  alias CoinRates.Currencies.Coin
 
   @doc """
   Returns the list of users.
@@ -36,7 +37,7 @@ defmodule CoinRates.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id), do: User |> preload(:coins) |> Repo.get!(id)
 
   def get_user_by(params), do: Repo.get_by(User, params)
 
@@ -102,6 +103,21 @@ defmodule CoinRates.Accounts do
       %Ecto.Changeset{data: %User{}}
 
   """
+
+  def add_coin(%User{} = user, %Coin{} = coin) do
+    user
+    |> change()
+    |> put_assoc(:coins, [coin | user.coins])
+    |> Repo.update!()
+  end
+
+  def remove_coin(%User{} = user, %Coin{} = coin) do
+    user
+    |> change()
+    |> put_assoc(:coins, List.delete(user.coins, coin))
+    |> Repo.update!()
+  end
+
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end

@@ -17,9 +17,18 @@ defmodule CoinRates.Currencies do
       [%Coin{}, ...]
 
   """
-  def list_coins do
+  def list_coins() do
     quotes_query = from q in Quote, order_by: [asc: q.inserted_at], where: q.inserted_at >= datetime_add(^DateTime.utc_now, -1, "day")
-    Repo.all(from Coin, preload: [quotes: ^quotes_query])
+    Coin |> preload([quotes: ^quotes_query]) |> Repo.all
+  end
+
+  def user_coins(user_id) do
+    quotes_query = from q in Quote, order_by: [asc: q.inserted_at], where: q.inserted_at >= datetime_add(^DateTime.utc_now, -1, "day")
+    Coin |> join(:inner, [c], uc in "users_coins", on: uc.user_id == ^user_id and uc.coin_id == c.id) |> preload([quotes: ^quotes_query]) |> Repo.all
+  end
+
+  def user_coin(user_id, coin_id) do
+    (from c in Coin, join: uc in "users_coins", on: uc.user_id == ^user_id and uc.coin_id == ^coin_id) |> Repo.all
   end
 
   @doc """

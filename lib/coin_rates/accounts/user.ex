@@ -7,6 +7,7 @@ defmodule CoinRates.Accounts.User do
     field :email, :string
     field :name, :string
     field :password, :string, virtual: true
+    many_to_many :coins, CoinRates.Currencies.Coin, join_through: "users_coins", on_replace: :delete
 
     timestamps()
   end
