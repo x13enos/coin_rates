@@ -1,12 +1,15 @@
-  <%= button("Add Coin", to: Routes.coins_path(@conn, :new), method: :get, class: "btn btn-primary") %>
+  
+  <div class="mt-3">
+    <span class="page-title">Dashboard</span>
+    <%= button("Add Coin", to: Routes.coins_path(@conn, :new), method: :get, class: "btn btn-primary float-right") %>
+  </div>
 
   <script type="text/javascript">
     window.chart_data = {}
     window.chart_labels = {}
   </script>
 
-
-  <div class="mt-4">
+  <div class="mt-2">
     <div class="row">
       <%= for coin <- @coins do %>
         <script type="text/javascript">
@@ -23,30 +26,32 @@
               <div class="token_address">
                 <%= coin.token_address %>
               </div>
-              <%= link("Website", to: coin.website, class: "pt-1") %>
+              <%= link("Website", to: coin.website, class: "pt-1", target: "_blank") %>
             </div>
             <hr>
             <div class="chart">
               <canvas id="lineChart-<%= coin.slug %>"></canvas>
             </div>
             <hr>
-            <div class="d-flex">
-              <%= if coin.reddit do %>
-                <%= link to: coin.reddit, class: "icon mr-3" do %>
-                  <i class="fab fa-reddit %> fa-2x"></i>
+            <div class="d-flex justify-content-between">
+              <div>
+                <%= if coin.reddit do %>
+                  <%= link to: coin.reddit, class: "icon mr-3", target: "_blank" do %>
+                    <i class="fab fa-reddit %> fa-2x"></i>
+                  <% end %>
                 <% end %>
-              <% end %>
-              <%= if coin.twitter do %>
-                <%= link to: coin.twitter, class: "icon mr-3" do %>
-                  <i class="fab fa-twitter %> fa-2x"></i>
+                <%= if coin.twitter do %>
+                  <%= link to: coin.twitter, class: "icon mr-3", target: "_blank" do %>
+                    <i class="fab fa-twitter %> fa-2x"></i>
+                  <% end %>
                 <% end %>
-              <% end %>
-              <%= for chat <- coin.chats do %>
-                <%= link to: chat, class: "icon mr-3" do %>
-                  <i class="fab fa-<%= chat_logo(chat) %> fa-2x"></i>
+                <%= for chat <- coin.chats do %>
+                  <%= link to: chat, class: "icon mr-3", target: "_blank" do %>
+                    <i class="fab fa-<%= chat_logo(chat) %> fa-2x"></i>
+                  <% end %>
                 <% end %>
-              <% end %>
-              <%= button("remove", to: Routes.coins_path(@conn, :delete, coin.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger", ) %>
+              </div>
+              <%= button("remove", to: Routes.coins_path(@conn, :delete, coin.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger float-right", ) %>
             </div>
           </div>
         </div>
