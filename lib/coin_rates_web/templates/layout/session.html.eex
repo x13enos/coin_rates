@@ -12,7 +12,7 @@
   </head>
 
   <body class="text-center">
-    <main role="main" class="container">
+    <main role="main" class="session-form">
       <%= if get_flash(@conn, :info) do %>
         <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <% end %>
@@ -21,11 +21,13 @@
       <% end %>
       <%= @inner_content %>
 
-      <%= if @conn.request_path == "/session/login" do %>
-        <%= link "Register", to: Routes.registration_path(@conn, :new) %>
-      <%= else %>
-        <%= link "Login", to: "/session/login" %>
-      <% end %>
+      <div class="mt-2">
+        <%= if @conn.request_path == "/session/login" do %>
+          <%= link "Register", to: Routes.registration_path(@conn, :new) %>
+        <%= else %>
+          <%= link "Login", to: "/session/login" %>
+        <% end %>
+      </div>
     </main>
   </body>
 </html>

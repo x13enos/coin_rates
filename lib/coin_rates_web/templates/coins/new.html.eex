@@ -5,4 +5,5 @@
     <%= text_input f, :slug, class: "form-control" %>
   </div>
   <%= submit "Add", class: "btn btn-primary" %>
+  <%= button("Back", to: Routes.coins_path(@conn, :index), method: :get, class: "btn") %>
 <% end %>

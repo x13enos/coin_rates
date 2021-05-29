@@ -26,7 +26,7 @@ defmodule CoinRatesWeb.Router do
   scope "/", CoinRatesWeb do
     pipe_through [:browser, :auth]
 
-    get "/", PageController, :index
+    get "/", Plugs.Redirect, to: "/dashboard"
     get "/dashboard", CoinsController, :index
 
     resources "/coins", CoinsController, except: [:index, :show]

@@ -1,25 +1,20 @@
-<h1>Create an account</h1>
+<h2 class="mt-5 mb-3">Create an account</h1>
 
-<%= form_for @changeset, Routes.registration_path(@conn, :create), fn f -> %>
+<%= form_for @changeset, Routes.registration_path(@conn, :create), [class: "form-signin"], fn f -> %>
   <%= if f.errors != [] do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below:</p>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <label>Email</label>
-    <%= email_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
-  </div>
+  <label for="inputEmail" class="sr-only">Email</label>
+  <%= email_input f, :email, class: "form-control", id: "inputEmail", placeholder: "Email address" %>
 
-  <div class="form-group">
-    <label>Password</label>
-    <%= password_input f, :password, class: "form-control" %>
-    <%= error_tag f, :password %>
-  </div>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <%= password_input f, :password, class: "form-control", id: "inputPassword", placeholder: "Password" %>
 
-  <div class="form-group">
-    <%= submit "Signup", class: "btn btn-primary" %>
-  </div>
+  <%= error_tag f, :email %>
+  <%= error_tag f, :password %>
+
+  <%= submit "Signup", class: "btn btn-primary mt-3 btn-block" %>
 <% end %>
