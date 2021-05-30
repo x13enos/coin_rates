@@ -12,8 +12,8 @@ defmodule CoinRates.Currencies.Coin do
     field :twitter, :string
     field :chats, {:array, :string}
     field :token_address, :string
-    has_many :quotes, CoinRates.Currencies.Quote
-    many_to_many :users, CoinRates.Accounts.User, join_through: "users_coins"
+    has_many :quotes, CoinRates.Currencies.Quote, on_delete: :delete_all
+    many_to_many :users, CoinRates.Accounts.User, join_through: "users_coins", on_delete: :delete_all
 
     timestamps()
   end

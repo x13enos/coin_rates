@@ -19,7 +19,7 @@ defmodule CoinRatesWeb.CoinsController do
         return_error(conn, "new.html", "You should send the slug.")
       coin = coin_already_exists?(slug) ->
         process_existed_coin(conn, coin)
-      true -> case CoinRatesWeb.CoinInfoFetcher.perform(slug) do
+      true -> case CoinRatesWeb.CoinInfoFetcher.perform(slug, conn.assigns.current_user) do
         {:ok} -> redirect(conn, to: Routes.coins_path(conn, :index))
         {:error, message} -> return_error(conn, "new.html", message)
       end

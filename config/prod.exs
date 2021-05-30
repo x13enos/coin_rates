@@ -16,6 +16,8 @@ config :coin_rates, CoinRatesWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :coin_rates, app_env: "prod"
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

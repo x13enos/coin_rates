@@ -13,9 +13,9 @@ defmodule CoinRatesWeb.CoinInfoFetcher do
 
   """
 
-  def perform(slug) do
+  def perform(slug, current_user) do
     {:ok, response} = fetch_data_from_market(slug)
-    handle_response(response)
+    handle_response(response, current_user)
   end
 
   defp fetch_data_from_market(slug) do
@@ -25,10 +25,11 @@ defmodule CoinRatesWeb.CoinInfoFetcher do
   end
 
   defp handle_response(%{ status_code: 400 }), do: {:error, "You passed invalid slug"}
-  defp handle_response(response) do
-    Poison.decode!(response.body)
+  defp handle_response(response, current_user) do
+    {:ok, coin} = Poison.decode!(response.body)
     |> select_params
     |> create_coin
+    CoinRates.Accounts.add_coin(current_user, coin)
     {:ok}
   end
 
